@@ -1,0 +1,6 @@
+function check(){
+	if(document.frm.id.value == ""){
+		alert("아이디를 입력하세요.");
+		retun false;
+	}
+}
