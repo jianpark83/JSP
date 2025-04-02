@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename resource &apos;web-study-02/src/main/webapp/Param.js&apos; to &apos;param.js&apos;" description="Rename resource &apos;Param.js&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="src/main/webapp/Param.js" name="param.js" stamp="1743574606300" updateReferences="true"/>
+</session>
