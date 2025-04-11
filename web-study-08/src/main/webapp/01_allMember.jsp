@@ -30,11 +30,20 @@
 		</tr>
 	<%
 	try{
+		//1. 드라이브 로드(객체 생성)
 		Class.forName("oracle.jdbc.driver.OracleDriver");  //ojdbc8.jar이 있어야 실행 가능!!
-		conn = DriverManager.getConnection(url,uid,pass);
-		stmt = conn.createStatement();
-		rs = stmt.executeQuery(sql);
 		
+		//2. DB연결
+		conn = DriverManager.getConnection(url,uid,pass);
+		
+		//3. slq 구문 전송, DB 날리는 역할(createStatement())
+		stmt = conn.createStatement();  
+		
+		//4. 조회한 결과 주소를 가지고 있음
+		rs = stmt.executeQuery(sql);   //select, 조회
+	       //stmt.executeUpdate(sql);   //insert, update, delete
+		
+	    //5. 결과 출력(한건이 아니기 때문에 while문 사용)   
 		while(rs.next()){
 			out.println("<tr>");
 			out.println("<td>" + rs.getString("name") +"</td>");
@@ -47,8 +56,8 @@
 		}
 	}catch(Exception e){
 		e.printStackTrace();
-	}finally{
-		try{
+	}finally{  //finally 무조건 실행
+		try{ 
 			if(rs != null) rs.close();
 			if(stmt != null) stmt.close();
 			if(conn != null) conn.close();
