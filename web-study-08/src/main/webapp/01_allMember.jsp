@@ -30,7 +30,7 @@
 		</tr>
 	<%
 	try{
-		Class.forName("oracle.jdbc.driver.OracleDriver");
+		Class.forName("oracle.jdbc.driver.OracleDriver");  //ojdbc8.jar이 있어야 실행 가능!!
 		conn = DriverManager.getConnection(url,uid,pass);
 		stmt = conn.createStatement();
 		rs = stmt.executeQuery(sql);
