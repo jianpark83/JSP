@@ -11,8 +11,8 @@
 	ResultSet rs = null;
 	
 	String url = "jdbc:oracle:thin:@localhost:49161:xe";
-	String uid = "scott";
-	String pass = "1234";
+	String uid = "system";
+	String pass = "oracle";
 	String sql = "select * from member";
 
 %>    
@@ -21,6 +21,9 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<style>
+	th, td {text-align: center;}
+</style>
 </head>
 <body>
 	<table width="800" border="1">

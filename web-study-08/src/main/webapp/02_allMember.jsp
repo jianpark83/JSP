@@ -18,8 +18,8 @@
 	PreparedStatement pstmt = null;  //oracle 서버로 전송
 	
 	String url = "jdbc:oracle:thin:@localhost:49161:xe";
-	String uid = "scott";
-	String pass = "1234";
+	String uid = "system";
+	String pass = "oracle";
 	
 	String sql = "insert into member values(?, ?, ?, ?, ?, ?)";
 	//insert into member(1, 3) values(?, ?); ->개수 안맞으면 넣어야 할 값을 무조건 member에 지정해야 함
