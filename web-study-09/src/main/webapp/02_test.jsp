@@ -10,7 +10,7 @@
 </head>
 <body>
 <%
-	MemberDAO memDao = MemberDAO.getinstance();
+	MemberDAO memDao = MemberDAO.getInstance();
 
 	Connection conn = memDao.getConnection();
 	out.println(conn + "<br>");
