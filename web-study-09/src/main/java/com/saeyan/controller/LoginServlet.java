@@ -23,7 +23,18 @@ public class LoginServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		RequestDispatcher dis = request.getRequestDispatcher("member/login.jsp");
+		String url = "member/login.jsp";
+		
+		HttpSession session = request.getSession();
+		
+		if(session.getAttribute("loginUser") != null) {
+			
+//			MemberVO mVo = (MemberVO)session.setAttribute("loginUser", mVo);
+//			MemberDAO mDao = MemberDAO.getInstance();
+			url = "main.jsp";
+		}
+		
+		RequestDispatcher dis = request.getRequestDispatcher(url);
 		dis.forward(request, response);
 	}
 
@@ -64,9 +75,10 @@ public class LoginServlet extends HttpServlet {
 		}else if(result == 0){
 			request.setAttribute("message", "비밀번호가 맞지 않습니다.");
 		}else if(result == -1) {
-			request.setAttribute("message", "존재하지 않는 회원입니다.");
+			request.setAttribute("message", "존재하지 않는 회원입니다.");   
 		}
 		
+		//message 출력 후 다시 로그인 화면으로 이동(url)
 		request.getRequestDispatcher(url).forward(request, response);
 	}
 

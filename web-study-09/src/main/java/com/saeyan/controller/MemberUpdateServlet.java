@@ -8,23 +8,33 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import com.saeyan.dao.MemberDAO;
 import com.saeyan.dto.MemberVO;
 
-@WebServlet("/join.do")
-public class JoinServlet extends HttpServlet {
+@WebServlet("/memberUpdate.do")
+public class MemberUpdateServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    public JoinServlet() {
+    public MemberUpdateServlet() {
         super();
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		request.getRequestDispatcher("member/join.jsp").forward(request, response);  //join.jsp(회원가입)으로 forward
-	
+		String userid = request.getParameter("userid");
+
+		// DB 연결
+		MemberDAO mDao = MemberDAO.getInstance();
+		
+		// 정보 가져오기(mVo로 전달)
+		MemberVO mVo = mDao.getMember(userid);
+		
+		// 가져온 정보 수정화면으로 전달
+		request.setAttribute("mVo", mVo);
+		RequestDispatcher dispatcher = request.getRequestDispatcher("member/memberUpdate.jsp");
+		dispatcher.forward(request, response);
+		
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -33,11 +43,11 @@ public class JoinServlet extends HttpServlet {
 		String name = request.getParameter("name");
 		String userid = request.getParameter("userid");
 		String pwd = request.getParameter("pwd");
-		String email= request.getParameter("email");
+		String email = request.getParameter("email");
 		String phone = request.getParameter("phone");
 		String admin = request.getParameter("admin");
 		
-		MemberVO mVo = new MemberVO();  //값을 mVo 박스로 묶어서 MemberVO 전달
+		MemberVO mVo = new MemberVO();
 		
 		mVo.setName(name);
 		mVo.setUserid(userid);
@@ -46,26 +56,11 @@ public class JoinServlet extends HttpServlet {
 		mVo.setPhone(phone);
 		mVo.setAdmin(Integer.parseInt(admin));
 		
-		//1. DB 연결
 		MemberDAO mDao = MemberDAO.getInstance();
 		
-		//2. DB에 저장할 메소드 호출
-		int result = mDao.insertMember(mVo);
+		mDao.updateMember(mVo);
 		
-		//System.out.println("result : " + result);
-		
-		HttpSession session = request.getSession();
-		
-		if(result==1) {
-			session.setAttribute("userid", mVo.getUserid());
-			request.setAttribute("message", "회원 가입에 성공했습니다.");
-		}else {
-			request.setAttribute("message", "회원 가입에 실패했습니다.");
-		}
-		
-		RequestDispatcher dispatcher = request.getRequestDispatcher("member/login.jsp");
-		dispatcher.forward(request, response);
-		
+		response.sendRedirect("login.do");
 	}
 
 }

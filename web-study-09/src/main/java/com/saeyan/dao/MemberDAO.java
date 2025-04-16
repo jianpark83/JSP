@@ -55,13 +55,13 @@ public class MemberDAO {
 			//2. sql구문 전송
 			pstmt = conn.prepareStatement(sql);
 			//3. sql 맵핑
-			pstmt.setString(1, userid);
+			pstmt.setString(1, userid);  //전달받은 값으로 맵핑
 			//4. sql 구문 실행
-			rs = pstmt.executeQuery(); //sql구문이 select일때만 
+			rs = pstmt.executeQuery();  //sql구문이 select일때만 
 			
 			if(rs.next()) {
 				//회원 ID 존재!
-				if(rs.getString("pwd") != null && 
+				if(rs.getString("pwd") != null &&    //입력 들어온 암호와 내가 전달받은 암호가 같은지
 						rs.getString("pwd").equals(pwd)) {
 					result = 1;  //userid, pwd 일치
 				}else {
@@ -171,4 +171,88 @@ public class MemberDAO {
 		
 		return result;
 	}
+
+	//저장
+	public int insertMember(MemberVO mVo) {
+		
+		int result = -1;
+		
+		String sql = "insert into member values(?, ?, ?, ?, ?, ?)";
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			//1. DB연결
+			conn = getConnection();
+			
+			//2. sql 구문 전송
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, mVo.getName());
+			pstmt.setString(2, mVo.getUserid());
+			pstmt.setString(3, mVo.getPwd());
+			pstmt.setString(4, mVo.getEmail());
+			pstmt.setString(5, mVo.getPhone());
+			pstmt.setInt(6, mVo.getAdmin());
+			
+			//3. sql 구문 실행
+			/* executeUpdate -> insert, update, delete시 사용
+			 * result : 0 -> 저장 실패
+			 * result : 1 -> 저장 성공
+			 * commit은 auto commit;
+			 */
+			result = pstmt.executeUpdate();  //DB 저장
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				if(pstmt != null) pstmt.close();
+				if(conn != null) conn.close();
+			}catch(Exception e) {
+				e.printStackTrace();
+			} //end catch
+		} // end finally
+		
+		return result;	
+	} //end insertMember(MemberVO mVo)
+
+	public void updateMember(MemberVO mVo) {
+	
+		String sql = "update member set name=?, pwd=?, email=?, phone=?, admin=? where userid=?";
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			//1. DB연결
+			conn = getConnection();
+			
+			//2. sql 구문 전송
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, mVo.getName());
+			pstmt.setString(2, mVo.getPwd());
+			pstmt.setString(3, mVo.getEmail());
+			pstmt.setString(4, mVo.getPhone());
+			pstmt.setInt(5, mVo.getAdmin());
+			pstmt.setString(6, mVo.getUserid());
+            pstmt.executeUpdate();
+			//3. sql 구문 실행
+			/* executeUpdate -> insert, update, delete시 사용
+			 * result : 0 -> 저장 실패
+			 * result : 1 -> 저장 성공
+			 * commit은 auto commit;
+			 */
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				if(pstmt != null) pstmt.close();
+				if(conn != null) conn.close();
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+		}	
+	} //end updateMember(MemberVO mVo)
 }
