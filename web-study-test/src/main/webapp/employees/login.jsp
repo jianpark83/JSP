@@ -9,18 +9,14 @@
 <style type="text/css">
 	td {
 	    border: 1px solid; black;
-	    width: 200px;
+	    width: 250px;
 	    text-align: center;
-	}
-	a {
-		text-decoration: none;
-		color: black;
 	}
 </style>
 </head>
 <body>
 	<!-- 상단 메뉴 -->
-	<table border="1" width=1200px align="center">
+	<table border="1" width=1400px align="center">
 		<tr height=50px>
 			<td></td>
 			<td></td>
@@ -31,7 +27,7 @@
 			<span style="color:#ccc">(로그인 후 사용 가능)</span></td>
 		</tr>
 	</table>
-	
+
 <form action="login.do" method="post" name="frm">
 	<table border="1" align="center">
 		<tr>
@@ -39,11 +35,11 @@
 		</tr>
 		<tr height=35px>
 			<td align="center">아이디</td>
-			<td align="center"><input type="text" name="id"></td>
+			<td align="center"><input type="text" name="userid"></td>
 		</tr>
 		<tr height=35px>
 			<td align="center">비밀번호</td>
-			<td align="center"><input type="password" name="pass"></td>
+			<td align="center"><input type="password" name="pwd"></td>
 		</tr>
 		<tr height=35px>
 			<td align="center">레벨</td>

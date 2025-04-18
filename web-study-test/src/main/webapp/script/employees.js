@@ -1,14 +1,14 @@
 function loginCheck(){
 	
-	if (document.frm.id.value.length == 0){
+	if (document.frm.userid.value.length == 0){
 		alert("아이디를 입력 해주세요");
-		frm.id.focus();
+		frm.userid.focus();
 		return false;
 	}
 	
-	if (document.frm.pass.value == ""){
+	if (document.frm.pwd.value == ""){
 		alert("암호를 입력 해주세요");
-		frm.pass.focus();
+		frm.pwd.focus();
 		return false;
 	}
 	

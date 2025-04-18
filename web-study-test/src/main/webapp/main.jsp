@@ -41,7 +41,7 @@
 </head>
 <body>
 	<!-- 상단 메뉴 -->
-	<table border="1" width=1200px align="center">
+	<table border="1" width=1400px align="center">
 		<tr height=50px>
 			<td>${loginUser.name}님 반갑습니다.</td>
 			<td>레벨 : ${loginUser.lev}</td>
@@ -53,6 +53,6 @@
 	</table>
 	<br>
 		<h2>회원 전용 페이지</h2>
-		<img src="img2.jpg" alt="이미지">
+		<img src="img/img2.jpg" alt="이미지">
 </body>
 </html>

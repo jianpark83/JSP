@@ -8,7 +8,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import com.magic.dao.EmployeesDAO;
 import com.magic.dto.EmployeesVO;
@@ -16,56 +15,41 @@ import com.magic.dto.EmployeesVO;
 @WebServlet("/login.do")
 public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    public LoginServlet() {
-        super();
-    }
+   
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		String url = "login.jsp";
+		//String url = "employees/login.jsp";
 		
-		HttpSession session = request.getSession();
-		if(session.getAttribute("loginUser") != null) {
-			url = "main.jsp";
-		}
-		
-		RequestDispatcher dis = request.getRequestDispatcher(url);
+		RequestDispatcher dis = request.getRequestDispatcher("employees/login.jsp");
 		dis.forward(request, response);
-	
+		
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setCharacterEncoding("utf-8");
-		
-		String id = request.getParameter("id");
-		String pass = request.getParameter("pass");
+
+		String userid = request.getParameter("userid");
+		String pwd = request.getParameter("pwd");
 		String lev = request.getParameter("lev");
-		String url=null;
+	
+		EmployeesDAO empDao = EmployeesDAO.getInstance();
+		int result = empDao.userCheck(userid, pwd, lev);
 		
-		EmployeesDAO eDao = EmployeesDAO.getInstance();
-		int result = eDao.userCheck(id, pass, lev);
-
-		if(result == 2 || result == 3){
-			EmployeesVO eVo = new EmployeesVO();
-			eVo = eDao.getMember(id);
-			
-			HttpSession session = request.getSession();
-			session.setAttribute("loginUser", eVo);			
-			session.setAttribute("result", result);			
-			url = "main.jsp";				
-		}else{
-			url = "login.jsp";
-			if(result == 1){
-				request.setAttribute("message", ".");
-			}else if(result == 0){			
-				request.setAttribute("message", ".");
-			}else{			
-				request.setAttribute("message", ".");
-			}
-		}
-		RequestDispatcher rd = request.getRequestDispatcher(url);
-		rd.forward(request, response);
+		System.out.println("로그인 여부 : " + result);
+		
+		if(result == 2 || result == 3) {
+	        // 로그인 성공 시 회원 정보 조회
+	        EmployeesVO loginUser = empDao.getMember(userid);
+	        // 세션에 저장
+	        request.getSession().setAttribute("loginUser", loginUser);
+	        // 회원 전용 페이지로 이동
+	        response.sendRedirect("main.jsp"); // memberOnly.jsp는 회원 전용 페이지 파일명 예시
+	    } else {
+	        // 로그인 실패
+	        request.setAttribute("message", "로그인 실패: 아이디/비밀번호/등급을 확인하세요.");
+	        RequestDispatcher dis = request.getRequestDispatcher("employees/login.jsp");
+	        dis.forward(request, response);
+	    }
 	}
-
 }
+
