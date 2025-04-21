@@ -30,7 +30,7 @@
 				<td>${product.name}</td>
 				<td>${product.price} 원</td>
 				<td><a href="productUpdate.do?code=${product.code}">상품 수정</a></td>
-				<td><a href="productUpdate.do?code=${product.code}">상품 삭제</a></td>
+				<td><a href="productDelete.do?code=${product.code}">상품 삭제</a></td>
 			</tr>	
 		</c:forEach>
 	</table>

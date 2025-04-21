@@ -150,4 +150,27 @@ public class ProductDAO {
 			DBManager.close(conn, pstmt);
 		}
 	} //end updateProduct
+
+	public void deleteProductByCode(int code) {
+
+		String sql = "delete from product where code = ?";
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			conn = DBManager.getConnection();
+			
+			pstmt = conn.prepareStatement(sql);
+			
+		
+			pstmt.setInt(1, code);
+			pstmt.executeUpdate();
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			DBManager.close(conn, pstmt);
+		}
+	} //end deleteProductByCode
 }
