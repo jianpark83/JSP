@@ -164,7 +164,7 @@
 
       
       
-      </Host>
+      <Context docBase="web-study-11" path="/" reloadable="true" source="org.eclipse.jst.jee.server:web-study-11"/></Host>
     </Engine>
   </Service>
 </Server>
