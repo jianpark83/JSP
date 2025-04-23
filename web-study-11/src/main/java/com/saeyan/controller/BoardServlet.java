@@ -16,18 +16,18 @@ public class BoardServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+        
 		//2.board_write
 		//1.BoardServlet?command=board_write_form
 		String command = request.getParameter("command");
 		System.out.println("BoardServlet에서 요청을 받음 확인 : " + command);
 	
-		ActionFactory af = ActionFactory.getInstance();
+		ActionFactory af = ActionFactory.getInstance(); //handler mapping 전달
 		Action action = af.getAction(command); //요청 받으면 af.getAction(command)
 		
 		//HandlerAdapter
 		if(action != null) {
-			action.execute(request, response); //참조하고 있는 대상을 실행시켜준다, ActionFactory로 전달
+			action.execute(request, response); //참조하고 있는 대상을 실행시켜준다
 		}
 	}
 

@@ -20,6 +20,7 @@ public class BoardWriteAction implements Action{
 		String title = request.getParameter("title");
 		String content = request.getParameter("content");
 		
+		//게시글 작성하면 bVo에 담아서
 		BoardVO bVo = new BoardVO();
 		bVo.setName(name);
 		bVo.setPass(pass);
@@ -29,11 +30,11 @@ public class BoardWriteAction implements Action{
 		
 		BoardDAO bDao = BoardDAO.getInstance();
 		
+		//DB에 반영
 		bDao.insertBoard(bVo);
 		
 		//new BoardListAction().execute(request, response); 교재
 		response.sendRedirect("BoardServlet?command=board_list");
 	}
 	
-
 }

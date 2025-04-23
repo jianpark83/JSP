@@ -30,7 +30,7 @@
                <td><a href="BoardServlet?command=board_view&num=${board.num}">
                      ${board.title} </a></td>
                <td>${board.name}</td>
-               <td><fmt:formatDate value="${board.writeDate}" /></td>
+               <td><fmt:formatDate pattern="yyyy-MM-dd" value="${board.writeDate}" /></td>
                <td>${board.readCount}</td>
             </tr>
          </c:forEach>
