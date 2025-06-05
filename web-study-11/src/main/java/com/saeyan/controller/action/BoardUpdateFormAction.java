@@ -19,7 +19,7 @@ public class BoardUpdateFormAction implements Action {
 		BoardDAO bDao = BoardDAO.getInstance();
 		BoardVO bVo = bDao.selectOneBoardByNum(Integer.parseInt(num));
 		
-		request.setAttribute("board", bVo);
+		request.setAttribute("board", bVo);  //boardUpdate에서 보여주기 위해 DB자료를 bVo로 받아서 board에 담아서 boardUpdate에 전달
 		
 		request.getRequestDispatcher("/board/boardUpdate.jsp")
 		.forward(request, response);
